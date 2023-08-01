@@ -1,0 +1,51 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.hzq.plain-plugin</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>Plain-plugins</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="hzqsultan@qq.com" url="https://www.yourcompany.com">sultan</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+      hzqsultan@qq.com
+      https://github.com/SultanDebug
+      凑40个字啊打啊打啊打啊打啊打啊打啊打啊...
+  ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+
+        <group id="Plugin.SampleMenu" text="_CG" description="代码生成器">
+            <add-to-group group-id="MainMenu" anchor="last"  />
+            <action id="Plugin.Textboxes" class="com.hzq.plainplugin.codegenerator.MyPlusGenerator" text="_CodeGenerator" description="代码生成" />
+        </group>
+
+        <!--<action id="myplus-generator" class="com.hzq.plus.MyPlusGenerator" text="generator" description="code generator">
+          <add-to-group group-id="GenerateGroup" anchor="first"/>
+          <keyboard-shortcut keymap="$default" first-keystroke="ctrl 1"/>
+        </action>-->
+    </actions>
+
+
+    <projectListeners>
+        <listener class="com.hzq.plainplugin.format.EditSavePsiListener"
+                  topic="com.intellij.openapi.fileEditor.FileDocumentManagerListener" />
+    </projectListeners>
+</idea-plugin>
