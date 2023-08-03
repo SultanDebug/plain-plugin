@@ -12,14 +12,14 @@ package com.hzq.plainplugin.codegenerator;
  */
 public class MpIdeaConfig {
     private String db;
-    private String name ;
-    private String ip ;
-    private String user ;
-    private String pass ;
-    private String main ;
-    private String sec ;
+    private String name;
+    private String ip;
+    private String user;
+    private String pass;
+    private String main;
+    private String sec;
     private String table;
-    private String module ;
+    private String module;
 
     public String getDb() {
         return db;
