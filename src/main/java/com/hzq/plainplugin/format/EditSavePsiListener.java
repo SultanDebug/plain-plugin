@@ -56,7 +56,7 @@ public class EditSavePsiListener implements FileDocumentManagerListener {
         OptimizeImportsProcessor optimizeImportsProcessor = new OptimizeImportsProcessor(project, psiFiles, null);
         optimizeImportsProcessor.run();
 
-        ReformatCodeProcessor reformatCodeProcessor = new ReformatCodeProcessor(project, psiFiles, null, false);
+        ReformatCodeProcessor reformatCodeProcessor = new ReformatCodeProcessor(project, psiFiles, null, true);
         reformatCodeProcessor.run();
 
     }
