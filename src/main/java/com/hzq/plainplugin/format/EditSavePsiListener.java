@@ -1,6 +1,8 @@
 package com.hzq.plainplugin.format;
 
 import com.google.common.collect.Lists;
+import com.hzq.plainplugin.swing.config.ConfigCache;
+import com.hzq.plainplugin.swing.config.FormatConfig;
 import com.intellij.codeInsight.actions.OptimizeImportsProcessor;
 import com.intellij.codeInsight.actions.ReformatCodeProcessor;
 import com.intellij.openapi.editor.Document;
@@ -33,11 +35,25 @@ public class EditSavePsiListener implements FileDocumentManagerListener {
 
     @Override
     public void beforeDocumentSaving(@NotNull Document document) {
+        FormatConfig formatConfig = ConfigCache.getInstance().getMpIdeaModule().getFormatConfig();
+
+        if (formatConfig != null && !"realtime".equals(formatConfig.getStyle())) {
+
+            return;
+        }
+
         processor(Lists.newArrayList(document));
     }
 
     @Override
     public void beforeAllDocumentsSaving() {
+        FormatConfig formatConfig = ConfigCache.getInstance().getMpIdeaModule().getFormatConfig();
+
+        if (formatConfig != null && !"realtime".equals(formatConfig.getStyle())) {
+
+            return;
+        }
+
         List<Document> unsavedDocuments = Arrays.asList(FileDocumentManager.getInstance().getUnsavedDocuments());
         if (!unsavedDocuments.isEmpty()) {
             processor(unsavedDocuments);

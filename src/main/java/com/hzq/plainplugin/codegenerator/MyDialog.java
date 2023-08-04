@@ -2,6 +2,7 @@
 package com.hzq.plainplugin.codegenerator;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hzq.plainplugin.swing.config.Constants;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import org.jetbrains.annotations.Nullable;
@@ -32,19 +33,19 @@ public class MyDialog extends DialogWrapper {
         setTitle("代码生成器");
         this.project = project;
         formSwing = new MyFormSwing();
-        File file = new File("./mp-idea.txt");
+        File file = new File(Constants.CONFIG_PATH);
         if(file.exists()){
             try {
                 FileInputStream inputStream = new FileInputStream(file);
                 byte[] bytes = new byte[1024];
                 ByteArrayOutputStream byteBufferOutputStream = new ByteArrayOutputStream();
                 int len = 0;
-                while((len = inputStream.read(bytes))!=-1){
-                    byteBufferOutputStream.write(bytes,0,len);
+                while ((len = inputStream.read(bytes)) != -1) {
+                    byteBufferOutputStream.write(bytes, 0, len);
                 }
                 String s = new String(byteBufferOutputStream.toByteArray(), StandardCharsets.UTF_8);
 
-                MpIdeaConfig mpa = JSONObject.parseObject(s,MpIdeaConfig.class);
+                MpIdeaConfig mpa = JSONObject.parseObject(s, MpIdeaConfig.class);
 
                 formSwing.setDbContent(mpa.getDb());
                 formSwing.setIpContent(new JTextField(mpa.getIp()));

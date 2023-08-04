@@ -1,5 +1,6 @@
 package com.hzq.plainplugin.codegenerator;
 
+import com.hzq.plainplugin.swing.MyDialogV2;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
@@ -17,7 +18,7 @@ public class MyPlusGenerator extends AnAction {
 
     public MyPlusGenerator() {
         // Set the menu item name.
-        super("_CodeGenerator");
+        super("_PlainPlugin");
         // Set the menu item name, description and icon.
         // super("Text _Boxes","Item description",IconLoader.getIcon("/Mypackage/icon.png"));
     }
@@ -27,7 +28,7 @@ public class MyPlusGenerator extends AnAction {
         // TODO: insert action logic here
         Project project = event.getData(PlatformDataKeys.PROJECT);
 
-        MyDialog formTestDialog = new MyDialog(project);
+        MyDialogV2 formTestDialog = new MyDialogV2(project);
         //是否允许用户通过拖拽的方式扩大或缩小你的表单框，我这里定义为true，表示允许
         formTestDialog.setResizable(true);
         formTestDialog.show();

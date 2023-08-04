@@ -1,7 +1,9 @@
 /*
  * 深圳市灵智数科有限公司版权所有.
  */
-package com.hzq.plainplugin.codegenerator;
+package com.hzq.plainplugin.swing.config;
+
+import java.io.Serializable;
 
 /**
  * 功能说明
@@ -10,7 +12,7 @@ package com.hzq.plainplugin.codegenerator;
  * @version 1.0.0
  * @date 2021/4/22 11:25
  */
-public class MpIdeaConfig {
+public class CodeGeneratorConfig implements Serializable {
     private String db;
     private String name;
     private String ip;
@@ -20,16 +22,6 @@ public class MpIdeaConfig {
     private String sec;
     private String table;
     private String module;
-
-    private String fomateTriggerType;
-
-    public String getFomateTriggerType() {
-        return fomateTriggerType;
-    }
-
-    public void setFomateTriggerType(String fomateTriggerType) {
-        this.fomateTriggerType = fomateTriggerType;
-    }
 
     public String getDb() {
         return db;

@@ -1,7 +1,9 @@
-
-package com.hzq.plainplugin.codegenerator;
+package com.hzq.plainplugin.swing.panel;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hzq.plainplugin.codegenerator.CodeGenerator;
+import com.hzq.plainplugin.swing.config.CodeGeneratorConfig;
+import com.hzq.plainplugin.swing.config.ConfigCache;
 import com.hzq.plainplugin.swing.config.Constants;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
@@ -14,24 +16,27 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 /**
- * 功能说明
- *
- * @author 黄震强
- * @version 1.0.0
- * @date 2020/7/10 14:44
+ * @author Huangzq
+ * @description
+ * @date 2023/8/4 10:30
  */
-public class MyFormSwing {
-    private JPanel north = new JPanel();
+public class CodeGeneratorPanel {
+
+    private static CodeGeneratorPanel codeGeneratorPanel;
+
+    private CodeGeneratorPanel() {
+    }
+
+    public static CodeGeneratorPanel getInstance() {
+        if (codeGeneratorPanel == null) {
+            codeGeneratorPanel = new CodeGeneratorPanel();
+        }
+        return codeGeneratorPanel;
+    }
 
     private JPanel center = new JPanel();
 
-    private JPanel btn = new JPanel();
-
     private JPanel south = new JPanel();
-
-    //为了让位于底部的按钮可以拿到组件内容，这里把表单组件做成类属性
-    /*private JLabel r1 = new JLabel("输出：");
-    private JLabel r2 = new JLabel("NULL");*/
 
     ButtonGroup group = new ButtonGroup();
     private JLabel db = new JLabel("DB 类型：");
@@ -105,39 +110,16 @@ public class MyFormSwing {
         this.tableContent = tableContent;
     }
 
-    public JPanel initNorth() {
-
-        //定义表单的标题部分，放置到IDEA会话框的顶部位置
-
-        JLabel title = new JLabel("代码生成参数设置");
-        //字体样式
-        title.setFont(new Font("微软雅黑", Font.PLAIN, 26));
-        //水平居中
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        //垂直居中
-        title.setVerticalAlignment(SwingConstants.CENTER);
-        north.add(title);
-
-        return north;
-    }
-
     public JPanel initCenter() {
+        center.removeAll();
 
         //定义表单的主体部分，放置到IDEA会话框的中央位置
 
         //一个简单的3行2列的表格布局
-        center.setLayout(new GridLayout(9, 2));
-
-        //row1：按钮事件触发后将结果打印在这里
-        /*
-        //设置字体颜色
-        r1.setForeground(new Color(255, 47, 93));
-        center.add(r1);
-        //设置字体颜色
-        r2.setForeground(new Color(139, 181, 20));
-        center.add(r2);*/
+        center.setLayout(new GridLayout(10, 2));
 
         //row1 ：db类型
+        JPanel btn = new JPanel();
         group.add(b1);
         group.add(b2);
         btn.setLayout(new GridLayout(1, 2));
@@ -182,16 +164,25 @@ public class MyFormSwing {
         return center;
     }
 
-    public JPanel initSouth(Project project, MyDialog myDialog) {
+    public JPanel initSouth(Project project) {
+        south.removeAll();
 
         //定义表单的提交按钮，放置到IDEA会话框的底部位置
 
-        JButton submit = new JButton("提交");
+        JButton submit = new JButton("生成");
         //水平居中
         submit.setHorizontalAlignment(SwingConstants.CENTER);
         //垂直居中
         submit.setVerticalAlignment(SwingConstants.CENTER);
+
+        JButton save = new JButton("保存");
+        //水平居中
+        save.setHorizontalAlignment(SwingConstants.CENTER);
+        //垂直居中
+        save.setVerticalAlignment(SwingConstants.CENTER);
+
         south.add(submit);
+        south.add(save);
 
         //按钮事件绑定
         submit.addActionListener(e -> {
@@ -216,10 +207,45 @@ public class MyFormSwing {
             String sec = secPkgContent.getText();
             String table = tableContent.getText();
             String module = moduleContent.getText();
-            //刷新r2标签里的内容，替换为name和age
-//            r2.setText(String.format("name:%s, age:%s", name, age));
 
-            MpIdeaConfig mp = new MpIdeaConfig();
+            String path = project.getBasePath();
+            try {
+                CodeGenerator.init(db, path, ip, user, pass, name, main, sec, table, module);
+            } catch (Exception ex) {
+                Messages.showMessageDialog(project, ex.getMessage(), "Error", Messages.getErrorIcon());
+            }
+
+            Messages.showMessageDialog(project, "生成完毕", "info", Messages.getInformationIcon());
+            //关闭对话框
+//            myDialog.doCancelAction();
+
+//            myDialog.close(1);
+
+        });
+
+
+        save.addActionListener(e -> {
+            String db = "mysql";
+            Enumeration<AbstractButton> elements = group.getElements();
+            while (elements.hasMoreElements()) {
+                AbstractButton abstractButton = elements.nextElement();
+                if (abstractButton.isSelected()) {
+                    db = abstractButton.getText();
+                    break;
+                }
+            }
+            //获取到name和age
+            String name = nameContent.getText();
+            String ip = ipContent.getText();
+            String user = userNameContent.getText();
+            String pass = passContent.getText();
+
+            String main = mainPkgContent.getText();
+            String sec = secPkgContent.getText();
+            String table = tableContent.getText();
+            String module = moduleContent.getText();
+
+            CodeGeneratorConfig mp = new CodeGeneratorConfig();
             mp.setDb(db);
             mp.setIp(ip);
             mp.setMain(main);
@@ -230,12 +256,9 @@ public class MyFormSwing {
             mp.setTable(table);
             mp.setUser(user);
 
+            ConfigCache.getInstance().getMpIdeaModule().setCodeGeneratorConfig(mp);
 
-            String path = project.getBasePath();
             try {
-//                THCodeGenerator.init(path,"Sultan" ,"com.hzq.demo","elevator","module_elevator_data");
-                CodeGenerator.init(db, path, ip, user, pass, name, main, sec, table, module);
-
                 //本地文件记忆
                 File file = new File(Constants.CONFIG_PATH);
                 if (!file.exists()) {
@@ -247,19 +270,13 @@ public class MyFormSwing {
                     }
                 }
                 FileOutputStream outputStream = new FileOutputStream(file);
-                outputStream.write(JSONObject.toJSONString(mp).getBytes());
+                outputStream.write(JSONObject.toJSONString(ConfigCache.getInstance().getMpIdeaModule()).getBytes());
                 outputStream.close();
-//            THCodeGenerator.init(path);
             } catch (Exception ex) {
                 Messages.showMessageDialog(project, ex.getMessage(), "Error", Messages.getErrorIcon());
             }
 
-            Messages.showMessageDialog(project, "生成完毕", "info", Messages.getInformationIcon());
-            //关闭对话框
-//            myDialog.doCancelAction();
-
-//            myDialog.close(1);
-
+            Messages.showMessageDialog(project, "保存成功", "info", Messages.getInformationIcon());
         });
 
         return south;

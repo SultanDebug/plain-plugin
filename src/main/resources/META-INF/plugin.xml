@@ -32,9 +32,10 @@
     <actions>
         <!-- Add your actions here -->
 
-        <group id="Plugin.SampleMenu" text="_CG" description="代码生成器">
-            <add-to-group group-id="MainMenu" anchor="last"  />
-            <action id="Plugin.Textboxes" class="com.hzq.plainplugin.codegenerator.MyPlusGenerator" text="_CodeGenerator" description="代码生成" />
+        <group id="Plugin.SampleMenu" text="_PP" description="插件箱">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action id="Plugin.Textboxes" class="com.hzq.plainplugin.codegenerator.MyPlusGenerator"
+                    text="_PlainPlugin" description="插件工具箱"/>
         </group>
 
         <!--<action id="myplus-generator" class="com.hzq.plus.MyPlusGenerator" text="generator" description="code generator">
