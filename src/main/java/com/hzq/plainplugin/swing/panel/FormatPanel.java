@@ -37,22 +37,31 @@ public class FormatPanel {
     private JPanel south = new JPanel();
 
     ButtonGroup group = new ButtonGroup();
-    private JLabel type = new JLabel("格式化方式：");
-    private JRadioButton b1 = new JRadioButton("实时格式化", true);
-    private JRadioButton b2 = new JRadioButton("手动保存格式化");
+    private JLabel type = new JLabel("格式化：");
+    private JRadioButton b1 = new JRadioButton("实时触发(焦点离开idea触发自动保存事件)", true);
+    private JRadioButton b2 = new JRadioButton("手动保存触发(ctrl+shift+s/ctrl+s 通用保存快捷键触发,eclipse强迫症兼容)");
+
+    private JRadioButton b3 = new JRadioButton("全部生效（兼顾idea实时保存事件和快捷键手动保存）");
 
     {
         b1.setName("realtime");
         b2.setName("save");
+        b3.setName("all");
     }
 
     public void setType(String type) {
         if ("realtime".equals(type)) {
             b1.setSelected(true);
             b2.setSelected(false);
-        } else {
+            b3.setSelected(false);
+        } else if ("save".equals(type)) {
             b1.setSelected(false);
             b2.setSelected(true);
+            b3.setSelected(false);
+        } else {
+            b1.setSelected(false);
+            b2.setSelected(false);
+            b3.setSelected(true);
         }
     }
 
@@ -65,15 +74,18 @@ public class FormatPanel {
         center.setLayout(new FlowLayout());
 
         //row1 ：db类型
-        JPanel btn = new JPanel();
+        JPanel btnPanel = new JPanel();
         group.add(b1);
         group.add(b2);
-        btn.setLayout(new FlowLayout());
-        btn.add(b1);
-        btn.add(b2);
+        group.add(b3);
+        BorderLayout borderLayout = new BorderLayout();
+        btnPanel.setLayout(new FlowLayout());
+        btnPanel.add(b1);
+        btnPanel.add(b2);
+        btnPanel.add(b3);
 
         center.add(type);
-        center.add(btn);
+        center.add(btnPanel);
 
         return center;
     }

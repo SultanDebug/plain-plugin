@@ -38,6 +38,15 @@
                     text="_PlainPlugin" description="插件工具箱"/>
         </group>
 
+        <action id="com.hzq.plainplugin.format.HandSaveAction"
+                class="com.hzq.plainplugin.format.HandSaveAction"
+                text="Execute Save Actions on shortcut"
+                description="Executes Save Actions with a shortcut">
+            <keyboard-shortcut keymap="$default"
+                               first-keystroke="shift ctrl S"
+                               second-keystroke="ctrl S"/>
+        </action>
+
         <!--<action id="myplus-generator" class="com.hzq.plus.MyPlusGenerator" text="generator" description="code generator">
           <add-to-group group-id="GenerateGroup" anchor="first"/>
           <keyboard-shortcut keymap="$default" first-keystroke="ctrl 1"/>
@@ -47,6 +56,6 @@
 
     <projectListeners>
         <listener class="com.hzq.plainplugin.format.EditSavePsiListener"
-                  topic="com.intellij.openapi.fileEditor.FileDocumentManagerListener" />
+                  topic="com.intellij.openapi.fileEditor.FileDocumentManagerListener"/>
     </projectListeners>
 </idea-plugin>

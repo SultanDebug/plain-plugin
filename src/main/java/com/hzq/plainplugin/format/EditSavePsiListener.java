@@ -37,8 +37,7 @@ public class EditSavePsiListener implements FileDocumentManagerListener {
     public void beforeDocumentSaving(@NotNull Document document) {
         FormatConfig formatConfig = ConfigCache.getInstance().getMpIdeaModule().getFormatConfig();
 
-        if (formatConfig != null && !"realtime".equals(formatConfig.getStyle())) {
-
+        if (formatConfig != null && (!"realtime".equals(formatConfig.getStyle()) && !"all".equals(formatConfig.getStyle()))) {
             return;
         }
 
@@ -49,8 +48,7 @@ public class EditSavePsiListener implements FileDocumentManagerListener {
     public void beforeAllDocumentsSaving() {
         FormatConfig formatConfig = ConfigCache.getInstance().getMpIdeaModule().getFormatConfig();
 
-        if (formatConfig != null && !"realtime".equals(formatConfig.getStyle())) {
-
+        if (formatConfig != null && (!"realtime".equals(formatConfig.getStyle()) && !"all".equals(formatConfig.getStyle()))) {
             return;
         }
 
