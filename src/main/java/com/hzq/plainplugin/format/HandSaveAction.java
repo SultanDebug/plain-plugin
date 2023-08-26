@@ -2,8 +2,6 @@ package com.hzq.plainplugin.format;
 
 import com.hzq.plainplugin.swing.config.ConfigCache;
 import com.hzq.plainplugin.swing.config.FormatConfig;
-import com.intellij.codeInsight.actions.OptimizeImportsProcessor;
-import com.intellij.codeInsight.actions.ReformatCodeProcessor;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
@@ -36,11 +34,7 @@ public class HandSaveAction extends AnAction {
         Set<PsiFile> psiFilesSet = new HashSet<>(singletonList(psiFile));
         PsiFile[] psiFiles = psiFilesSet.toArray(PsiFile[]::new);
 
-        OptimizeImportsProcessor optimizeImportsProcessor = new OptimizeImportsProcessor(project, psiFiles, null);
-        optimizeImportsProcessor.run();
-
-        ReformatCodeProcessor reformatCodeProcessor = new ReformatCodeProcessor(project, psiFiles, null, true);
-        reformatCodeProcessor.run();
+        FormatProcess.processorHand(project, psiFiles);
 
     }
 }

@@ -43,8 +43,7 @@
                 text="Execute Save Actions on shortcut"
                 description="Executes Save Actions with a shortcut">
             <keyboard-shortcut keymap="$default"
-                               first-keystroke="shift ctrl S"
-                               second-keystroke="ctrl S"/>
+                               first-keystroke="shift ctrl S"/>
         </action>
 
         <!--<action id="myplus-generator" class="com.hzq.plus.MyPlusGenerator" text="generator" description="code generator">
