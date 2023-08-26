@@ -38,10 +38,13 @@ public class FormatPanel {
 
     ButtonGroup group = new ButtonGroup();
     private JLabel type = new JLabel("格式化：");
-    private JRadioButton b1 = new JRadioButton("实时触发(焦点离开idea触发自动保存事件)", true);
-    private JRadioButton b2 = new JRadioButton("手动保存触发(ctrl+shift+s/ctrl+s 通用保存快捷键触发,eclipse强迫症兼容)");
+    //    private JRadioButton b1 = new JRadioButton("实时触发(焦点离开idea触发自动保存事件)", true);
+    private JRadioButton b1 = new JRadioButton("实时", true);
+    //    private JRadioButton b2 = new JRadioButton("手动保存触发(ctrl+shift+s/ctrl+s 通用保存快捷键触发,eclipse强迫症兼容)");
+    private JRadioButton b2 = new JRadioButton("手动保存");
 
-    private JRadioButton b3 = new JRadioButton("全部生效（兼顾idea实时保存事件和快捷键手动保存）");
+    //    private JRadioButton b3 = new JRadioButton("全部生效（兼顾idea实时保存事件和快捷键手动保存）");
+    private JRadioButton b3 = new JRadioButton("全部生效");
 
     {
         b1.setName("realtime");

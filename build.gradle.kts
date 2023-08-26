@@ -17,6 +17,7 @@ dependencies {
     implementation("mysql:mysql-connector-java:8.0.31")
     implementation("org.postgresql:postgresql:42.2.8")
     implementation("org.freemarker:freemarker:2.3.15")
+    implementation("com.intellij:forms_rt:7.0.3")
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
