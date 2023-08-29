@@ -1,6 +1,5 @@
 package com.hzq.plainplugin.format;
 
-import com.google.common.collect.Lists;
 import com.hzq.plainplugin.swing.config.ConfigCache;
 import com.hzq.plainplugin.swing.config.FormatConfig;
 import com.intellij.openapi.diagnostic.Logger;
@@ -9,7 +8,6 @@ import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileDocumentManagerListener;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDocumentManager;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +28,7 @@ public class EditSavePsiListener implements FileDocumentManagerListener {
         psiDocumentManager = PsiDocumentManager.getInstance(project);
     }
 
-    @Override
+    /*@Override
     public void beforeDocumentSaving(@NotNull Document document) {
         FormatConfig formatConfig = ConfigCache.getInstance().getMpIdeaModule().getFormatConfig();
 
@@ -39,7 +37,7 @@ public class EditSavePsiListener implements FileDocumentManagerListener {
         }
 
         FormatProcess.processor(this.project, this.psiDocumentManager, Lists.newArrayList(document));
-    }
+    }*/
 
     @Override
     public void beforeAllDocumentsSaving() {

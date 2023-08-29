@@ -4,6 +4,7 @@ import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.codeInsight.actions.OptimizeImportsProcessor;
 import com.intellij.codeInsight.actions.RearrangeCodeProcessor;
 import com.intellij.codeInsight.actions.ReformatCodeProcessor;
+import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
@@ -13,6 +14,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.util.PsiErrorElementUtil;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -43,31 +45,51 @@ public class FormatProcess {
 
         PsiFile[] psiFilesEligible = psiFiles.stream()
                 .filter(psiFile -> isPsiFileEligible(project, psiFile))
-                .collect(toSet()).toArray(PsiFile[]::new);
+                .peek(psiFile -> LOGGER.info(String.format("获取文件：%s", psiFile.getName())))
+                .collect(toSet())
+                .toArray(PsiFile[]::new);
 
+        if (psiFilesEligible == null || psiFilesEligible.length == 0) {
+            return;
+        }
 
         extracted(project, psiFilesEligible);
-
+//        WriteCommandAction.runWriteCommandAction(project, () -> );
     }
 
     public static void processorHand(Project project, PsiFile[] psiFilesEligible) {
-        for (PsiFile psiFile : psiFilesEligible) {
-            if (!isPsiFileEligible(project, psiFile)) {
-                return;
-            }
+        PsiFile[] psiFiles = Arrays.stream(psiFilesEligible)
+                .filter(o -> isPsiFileEligible(project, o))
+                .peek(psiFile -> LOGGER.info(String.format("获取文件：%s", psiFile.getName())))
+                .collect(toSet())
+                .toArray(PsiFile[]::new);
+
+        if (psiFiles == null || psiFiles.length == 0) {
+            return;
         }
-        extracted(project, psiFilesEligible);
+        extracted(project, psiFiles);
+//        WriteCommandAction.runWriteCommandAction(project, () -> );
     }
 
     private static void extracted(Project project, PsiFile[] psiFilesEligible) {
-        OptimizeImportsProcessor optimizeImportsProcessor = new OptimizeImportsProcessor(project, psiFilesEligible, null);
-        optimizeImportsProcessor.run();
 
-        ReformatCodeProcessor reformatCodeProcessor = new ReformatCodeProcessor(project, psiFilesEligible, null, false);
-        reformatCodeProcessor.run();
+        WriteCommandAction.writeCommandAction(project, psiFilesEligible)
+                .run(() -> {
+                    OptimizeImportsProcessor optimizeImportsProcessor = new OptimizeImportsProcessor(project, psiFilesEligible, null);
+                    optimizeImportsProcessor.run();
+                });
 
-        RearrangeCodeProcessor rearrangeCodeProcessor = new RearrangeCodeProcessor(project, psiFilesEligible, CodeInsightBundle.message("command.rearrange.code"), null, false);
-        rearrangeCodeProcessor.run();
+        WriteCommandAction.writeCommandAction(project, psiFilesEligible)
+                .run(() -> {
+                    ReformatCodeProcessor reformatCodeProcessor = new ReformatCodeProcessor(project, psiFilesEligible, null, false);
+                    reformatCodeProcessor.run();
+                });
+
+        WriteCommandAction.writeCommandAction(project, psiFilesEligible)
+                .run(() -> {
+                    RearrangeCodeProcessor rearrangeCodeProcessor = new RearrangeCodeProcessor(project, psiFilesEligible, CodeInsightBundle.message("command.rearrange.code"), null, false);
+                    rearrangeCodeProcessor.run();
+                });
     }
 
 
