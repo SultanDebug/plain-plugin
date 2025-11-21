@@ -14,7 +14,7 @@ import javax.swing.*;
 /**
  * 功能说明
  *
- * @author 黄震强
+ * @author sultan
  * @version 1.0.0
  * @date 2020/7/10 14:41
  */

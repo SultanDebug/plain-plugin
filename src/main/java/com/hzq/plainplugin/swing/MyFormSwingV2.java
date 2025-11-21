@@ -12,7 +12,7 @@ import java.awt.*;
 /**
  * 功能说明
  *
- * @author 黄震强
+ * @author sultan
  * @version 1.0.0
  * @date 2020/7/10 14:44
  */
@@ -22,6 +22,19 @@ public class MyFormSwingV2 {
     private JPanel center = new JPanel();
 
     private JPanel south = new JPanel();
+
+    private static JPanel center(DialogWrapper dialog, String type, Project project) {
+        if ("code".equals(type)) {
+            return CodeGeneratorPanel.getInstance().initCenter();
+        } else if ("format".equals(type)) {
+            return FormatPanel.getInstance().initCenter();
+        } else {
+            JLabel jLabel = new JLabel("暂不支持");
+            JPanel jPanel = new JPanel();
+            jPanel.add(jLabel);
+            return jPanel;
+        }
+    }
 
     public JPanel initCenter(DialogWrapper dialog, Project project) {
         JPanel jPanel = new JPanel();
@@ -49,19 +62,6 @@ public class MyFormSwingV2 {
         jPanel.add(jTabbedPane);
 
         return jPanel;
-    }
-
-    private static JPanel center(DialogWrapper dialog, String type, Project project) {
-        if ("code".equals(type)) {
-            return CodeGeneratorPanel.getInstance().initCenter();
-        } else if ("format".equals(type)) {
-            return FormatPanel.getInstance().initCenter();
-        } else {
-            JLabel jLabel = new JLabel("暂不支持");
-            JPanel jPanel = new JPanel();
-            jPanel.add(jLabel);
-            return jPanel;
-        }
     }
 
     public JPanel initSouth(DialogWrapper dialog, String type, Project project) {

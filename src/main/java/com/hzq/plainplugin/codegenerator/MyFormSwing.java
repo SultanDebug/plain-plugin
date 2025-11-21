@@ -1,4 +1,3 @@
-
 package com.hzq.plainplugin.codegenerator;
 
 import com.alibaba.fastjson.JSONObject;
@@ -16,24 +15,20 @@ import java.util.Enumeration;
 /**
  * 功能说明
  *
- * @author 黄震强
+ * @author sultan
  * @version 1.0.0
  * @date 2020/7/10 14:44
  */
 public class MyFormSwing {
+    ButtonGroup group = new ButtonGroup();
     private JPanel north = new JPanel();
-
     private JPanel center = new JPanel();
-
     private JPanel btn = new JPanel();
-
-    private JPanel south = new JPanel();
 
     //为了让位于底部的按钮可以拿到组件内容，这里把表单组件做成类属性
     /*private JLabel r1 = new JLabel("输出：");
     private JLabel r2 = new JLabel("NULL");*/
-
-    ButtonGroup group = new ButtonGroup();
+    private JPanel south = new JPanel();
     private JLabel db = new JLabel("DB 类型：");
     private JRadioButton b1 = new JRadioButton("mysql", true);
     private JRadioButton b2 = new JRadioButton("postgresql");

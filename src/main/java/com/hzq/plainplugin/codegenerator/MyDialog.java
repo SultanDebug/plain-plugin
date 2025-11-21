@@ -1,4 +1,3 @@
-
 package com.hzq.plainplugin.codegenerator;
 
 import com.alibaba.fastjson.JSONObject;
@@ -17,15 +16,15 @@ import java.nio.charset.StandardCharsets;
 /**
  * 功能说明
  *
- * @author 黄震强
+ * @author sultan
  * @version 1.0.0
  * @date 2020/7/10 14:41
  */
 public class MyDialog extends DialogWrapper {
-    private Project project ;
+    private Project project;
 
     //swing样式类
-    private MyFormSwing formSwing ;
+    private MyFormSwing formSwing;
 
     public MyDialog(@Nullable Project project) {
         super(project);
@@ -34,7 +33,7 @@ public class MyDialog extends DialogWrapper {
         this.project = project;
         formSwing = new MyFormSwing();
         File file = new File(Constants.CONFIG_PATH);
-        if(file.exists()){
+        if (file.exists()) {
             try {
                 FileInputStream inputStream = new FileInputStream(file);
                 byte[] bytes = new byte[1024];
@@ -78,7 +77,7 @@ public class MyDialog extends DialogWrapper {
     // 重写下面的方法，返回一个自定义的swing样式，该样式会展示在会话框的最下方的位置
     @Override
     protected JComponent createSouthPanel() {
-        return formSwing.initSouth(project,this);
+        return formSwing.initSouth(project, this);
     }
 
     @Override

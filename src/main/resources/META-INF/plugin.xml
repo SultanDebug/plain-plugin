@@ -8,7 +8,7 @@
     <name>Plain-plugins</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="hzqsultan@qq.com" url="https://www.yourcompany.com">sultan</vendor>
+    <vendor email="hzqsultan@qq.com" url="https://github.com/SultanDebug/plain-plugin">sultan</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
@@ -32,10 +32,20 @@
     <actions>
         <!-- Add your actions here -->
 
-        <group id="Plugin.SampleMenu" text="_PP" description="插件箱">
+        <!--<group id="Plugin.SampleMenu" text="_PP" description="插件箱">
             <add-to-group group-id="MainMenu" anchor="last"/>
             <action id="Plugin.Textboxes" class="com.hzq.plainplugin.codegenerator.MyPlusGenerator"
                     text="_PlainPlugin" description="插件工具箱"/>
+        </group>-->
+
+        <group id="Plugin.SampleMenu" text="_PP" description="插件箱"
+               popup="true" compact="true">
+            <add-to-group group-id="MainMenu" anchor="after" relative-to-action="HelpMenu"/>
+
+            <action id="Plugin.Textboxes"
+                    class="com.hzq.plainplugin.codegenerator.MyPlusGenerator"
+                    text="_PlainPlugin"
+                    description="插件工具箱"/>
         </group>
 
         <action id="com.hzq.plainplugin.format.HandSaveAction"
