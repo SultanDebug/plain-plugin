@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.hzq"
-version = "1.0-SNAPSHOT"
+version = "2.0"
 
 repositories {
     mavenCentral()
@@ -38,7 +38,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("211")
-        untilBuild.set("233.*")
+        untilBuild.set("252.*")
     }
 
     signPlugin {
